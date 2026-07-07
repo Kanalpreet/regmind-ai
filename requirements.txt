@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+groq
+python-dotenv
+pinecone-client
+sentence-transformers
+rank-bm25
+joblib
+pandas
+numpy
+xgboost
+scikit-learn
+PyMuPDF
+torch

@@ -11,13 +11,30 @@ from backend.retrieval.fusion import reciprocal_rank_fusion
 
 def hybrid_search(query):
 
-    # Dense retrieval
-    vector_results = retrieve_chunks(query)
+    # =====================================
+    # VECTOR RETRIEVAL (RBI NAMESPACE)
+    # =====================================
 
-    # BM25 retrieval
-    bm25_results = bm25_search(query)
+    vector_results = retrieve_chunks(
 
-    # Fusion
+        query=query,
+
+        namespace="rbi"
+    )
+
+    # =====================================
+    # BM25 RETRIEVAL
+    # =====================================
+
+    bm25_results = bm25_search(
+
+        query
+    )
+
+    # =====================================
+    # RECIPROCAL RANK FUSION
+    # =====================================
+
     fused_results = reciprocal_rank_fusion(
 
         vector_results,
