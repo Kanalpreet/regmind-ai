@@ -1,26 +1,42 @@
-venv/
-__pycache__/
-.env
-*.pyc
-data/raw/*.pdf
-
+# ===========================
 # Python
+# ===========================
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
 
-# Environment
+# Environment Variables
 .env
+.env.*
 
-# Node
+# ===========================
+# Data
+# ===========================
+data/raw/*.pdf
+embeddings/
+temp/
+
+# ===========================
+# Node / React
+# ===========================
 node_modules/
-
-# React
 frontend/node_modules/
 frontend/dist/
 
+# ===========================
 # VS Code
+# ===========================
 .vscode/
 
+# ===========================
 # OS
+# ===========================
 .DS_Store
+Thumbs.db
+
+# ===========================
+# Logs
+# ===========================
+*.log

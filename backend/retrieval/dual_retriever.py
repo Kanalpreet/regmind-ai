@@ -38,6 +38,13 @@ def dual_retrieve(
         top_k=top_k
     )
 
+
+    print("\n========== RBI ==========")
+    print(rbi_chunks)
+
+    print("\n========== INTERNAL ==========")
+    print(internal_policy_chunks)
+
     return {
 
         "rbi_chunks": rbi_chunks,
