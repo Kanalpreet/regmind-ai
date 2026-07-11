@@ -130,5 +130,15 @@ def retrieve_chunks(
         retrieved_chunks.append(
             chunk_data
         )
+        print("\n==============================")
+        print(f"Namespace : {namespace}")
+        print(f"Matches Retrieved : {len(retrieved_chunks)}")
+
+        for i, chunk in enumerate(retrieved_chunks):
+             print(f"\nResult {i+1}")
+             print("Score :", chunk["score"])
+             print("Page  :", chunk["metadata"]["page_number"])
+             print("Text  :", chunk["chunk_text"][:200])
+        print("==============================\n")
 
     return retrieved_chunks
