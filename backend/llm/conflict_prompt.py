@@ -23,11 +23,11 @@ def build_conflict_prompt(
     # =====================================
 
     prompt = f"""
-You are RegMind AI, an expert Regulatory Compliance Conflict Detection Engine.
+You are RegMind AI, an expert Regulatory Compliance Conflict Detection Engine specializing in RBI banking regulations.
 
-A compliance officer has submitted an INTERNAL BANK POLICY or operational scenario for review.
+A compliance officer has submitted an internal bank policy or operational scenario.
 
-Your responsibility is to determine whether the submitted policy complies with the RBI regulations provided below.
+Your task is to determine whether the submitted policy CONFLICTS with the RBI regulations provided below.
 
 =================================================
 USER SUBMITTED POLICY
@@ -45,29 +45,41 @@ RELEVANT RBI REGULATIONS
 TASK
 =================================================
 
-Compare ONLY the USER SUBMITTED POLICY with the RBI regulations.
+Compare ONLY the USER SUBMITTED POLICY against the RBI regulations.
 
-DO NOT invent or assume any additional internal policies.
+DO NOT invent additional internal policies.
 
-DO NOT compare against any retrieved internal policy.
+DO NOT assume the submitted policy is a complete Standard Operating Procedure (SOP).
 
-A conflict exists ONLY if the submitted policy:
+Treat the submitted text as an isolated policy statement unless it explicitly claims to be a complete policy.
 
-• Contradicts an RBI requirement.
-• Omits a mandatory RBI obligation.
+=================================================
+DECISION RULES
+=================================================
+
+Return conflict_detected = true ONLY if the submitted policy:
+
+• Explicitly contradicts an RBI regulation.
+• Permits an activity prohibited by RBI.
 • Weakens or bypasses a mandatory RBI control.
-• Allows something prohibited by RBI.
+• Explicitly states something inconsistent with RBI requirements.
 
-There is NO conflict if the submitted policy:
+Return conflict_detected = false if the submitted policy:
 
-• Matches RBI requirements.
-• Is stricter than RBI requirements.
-• Adds additional internal controls that do not violate RBI regulations.
+• Is consistent with RBI regulations.
+• Is a short summary of RBI requirements.
+• Does not mention every RBI requirement.
+• Is stricter than RBI regulations.
+• Adds additional internal controls without violating RBI regulations.
+• Does not provide enough information to conclude a contradiction.
 
-If there is insufficient information to conclude a conflict, return:
+IMPORTANT:
 
-conflict_detected = false
-risk_level = "Low"
+Do NOT treat a policy as conflicting simply because it does not mention every RBI requirement.
+
+Missing unrelated RBI clauses are NOT conflicts.
+
+Only identify a conflict when there is a clear contradiction between the submitted policy and the RBI regulations.
 
 =================================================
 OUTPUT
@@ -78,20 +90,24 @@ Return ONLY valid JSON.
 {{
     "conflict_detected": true,
     "risk_level": "Low | Medium | High",
-    "reason": "Brief explanation of why the policy conflicts or complies with RBI regulations.",
-    "rbi_position": "Relevant RBI requirement.",
+    "reason": "Explain why the submitted policy conflicts with or complies with the RBI regulation.",
+    "rbi_position": "Relevant RBI requirement used for comparison.",
     "internal_policy_position": "Summarize ONLY the USER SUBMITTED POLICY.",
-    "recommendation": "Action required to achieve compliance."
+    "recommendation": "Recommended action."
 }}
 
-Rules:
+=================================================
+RULES
+=================================================
 
 - Return ONLY JSON.
-- No markdown.
-- No explanations outside JSON.
-- Do not hallucinate regulations.
-- Do not fabricate internal policies.
-- The value of "internal_policy_position" MUST summarize ONLY the USER SUBMITTED POLICY.
+- Do NOT use markdown.
+- Do NOT fabricate RBI regulations.
+- Do NOT fabricate internal policies.
+- Base your decision ONLY on the submitted policy and the retrieved RBI regulations.
+- If there is no explicit contradiction, set:
+  - conflict_detected = false
+  - risk_level = "Low"
 """
 
     return prompt
