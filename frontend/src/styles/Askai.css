@@ -395,3 +395,32 @@
   }
 
 }
+.source-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.source-item:last-child{
+    border-bottom:none;
+}
+
+.source-dot{
+    width:10px;
+    height:10px;
+    margin-top:8px;
+    border-radius:50%;
+    background:#2563eb;
+}
+
+.source-name{
+    font-size:13px;
+    font-weight:600;
+    color:#2563eb;
+}
+
+.source-page{
+    margin-top:3px;
+}

@@ -174,7 +174,7 @@ const AskAI = () => {
             {result.summary}
           </p>
 
-        </div>
+        </div> 
 
       )}
 
@@ -216,45 +216,72 @@ const AskAI = () => {
 
     <div className="meta-grid">
 
-      {/* SOURCE PAGES */}
+      {/* SOURCE EVIDENCE */}
 
-      <div className="meta-card">
+<div className="meta-card">
 
-        <h3>
-          Source References
-        </h3>
+  <h3>📄 Source Evidence</h3>
 
-        <div className="sources-list">
+  <div className="sources-list">
 
-          {result?.source_pages?.map(
-            (page, index) => (
+    {result?.source_evidence?.length ? (
 
-            <div
-              className="source-item"
-              key={index}
+      result.source_evidence.map((item, index) => (
+
+        <div
+          className="source-item"
+          key={index}
+        >
+
+          <div className="source-dot"></div>
+
+          <div>
+
+            <p className="source-name">
+
+              {item.source === "rbi"
+                ? "🏛 RBI Regulation"
+                : "🏦 Internal Policy"}
+
+            </p>
+
+            <p
+              className="source-page"
+              style={{
+                fontWeight: 600,
+                color: "#0f172a",
+                marginTop: "4px"
+              }}
             >
+              {item.document}
+            </p>
 
-              <div className="source-dot"></div>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#64748b",
+                marginTop: "2px"
+              }}
+            >
+              Page {item.page}
+            </p>
 
-              <div>
-
-                <p className="source-name">
-                  RBI Compliance Document
-                </p>
-
-                <p className="source-page">
-                  Page {page}
-                </p>
-
-              </div>
-
-            </div>
-
-          ))}
+          </div>
 
         </div>
 
-      </div>
+      ))
+
+    ) : (
+
+      <p>No supporting evidence available.</p>
+
+    )}
+
+  </div>
+
+</div>
+      
 
      
       {/* AI COMPLIANCE RISK */}
