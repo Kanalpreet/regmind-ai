@@ -311,6 +311,48 @@ const AskAI = () => {
       {result?.risk_analysis?.risk_level} Risk
     </div>
 
+    {/* SYSTEM EVALUATION */}
+
+<div className="meta-card">
+
+  <h3>📊 System Evaluation</h3>
+
+  <div className="evaluation-grid">
+
+    <div className="evaluation-row">
+      <span>Response Time</span>
+      <strong>{result?.response_time ?? "--"} sec</strong>
+    </div>
+
+    <div className="evaluation-row">
+      <span>Retrieved Chunks</span>
+      <strong>{result?.retrieved_chunks ?? "--"}</strong>
+    </div>
+
+    <div className="evaluation-row">
+      <span>Source Documents</span>
+      <strong>{result?.source_documents ?? "--"}</strong>
+    </div>
+
+    <div className="evaluation-row">
+      <span>Retrieval Method</span>
+      <strong>{result?.retrieval_method}</strong>
+    </div>
+
+    <div className="evaluation-row">
+      <span>Vector Database</span>
+      <strong>{result?.vector_database}</strong>
+    </div>
+
+    <div className="evaluation-row">
+      <span>Offline Model Accuracy</span>
+      <strong>{result?.model_accuracy}</strong>
+    </div>
+
+  </div>
+
+</div>
+
     {/* Confidence */}
 
     <div>

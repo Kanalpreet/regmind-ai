@@ -424,3 +424,36 @@
 .source-page{
     margin-top:3px;
 }
+
+/* ======================================
+   SYSTEM EVALUATION
+====================================== */
+
+.evaluation-grid{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:15px;
+}
+
+.evaluation-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.evaluation-row:last-child{
+    border-bottom:none;
+}
+
+.evaluation-row span{
+    color:#64748b;
+    font-size:14px;
+}
+
+.evaluation-row strong{
+    color:#111827;
+    font-weight:600;
+}
