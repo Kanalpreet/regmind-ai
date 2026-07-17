@@ -1,0 +1,75 @@
+{
+    "description": "Ground truth benchmark for RegMind AI conflict detection",
+
+    "clauses": [
+
+       
+    {
+        "id": "C01",
+        "label": "CONFLICT",
+        "internal_clause": "Video Customer Identification Process (V-CIP) shall not be used for onboarding any customer."
+    },
+    {
+        "id": "C02",
+        "label": "STRICTER",
+        "internal_clause": "For companies, beneficial ownership shall be determined using a 10% ownership threshold."
+    },
+    {
+        "id": "C03",
+        "label": "STRICTER",
+        "internal_clause": "For partnership firms, beneficial ownership shall be determined using a 10% ownership threshold."
+    },
+    {
+        "id": "C04",
+        "label": "ALIGNED",
+        "internal_clause": "For trusts, beneficial ownership shall be determined using a 15% ownership threshold."
+    },
+    {
+        "id": "C05",
+        "label": "STRICTER",
+        "internal_clause": "For unincorporated associations, beneficial ownership shall be determined using a 10% ownership threshold."
+    },
+    {
+        "id": "C06",
+        "label": "STRICTER",
+        "internal_clause": "High-risk customer accounts shall be reviewed every three months."
+    },
+    {
+        "id": "C07",
+        "label": "ALIGNED",
+        "internal_clause": "Periodic KYC updation shall be performed every 2 years for high-risk customers, 8 years for medium-risk customers, and 10 years for low-risk customers."
+    },
+    {
+        "id": "C08",
+        "label": "ALIGNED",
+        "internal_clause": "Customer records shall be retained for five years after the business relationship ends."
+    },
+    {
+        "id": "C09",
+        "label": "ALIGNED",
+        "internal_clause": "Cash Transaction Reports shall be filed for transactions exceeding Rs. 10 lakh."
+    },
+    {
+        "id": "C10",
+        "label": "STRICTER",
+        "internal_clause": "Transactions exceeding Rs. 40,000 shall trigger an internal compliance review."
+    },
+    {
+        "id": "C11",
+        "label": "ALIGNED",
+        "internal_clause": "Suspicious Transaction Reports shall be filed within seven working days."
+    },
+    {
+        "id": "C12",
+        "label": "ALIGNED",
+        "internal_clause": "Small accounts shall follow RBI limits of Rs. 1 lakh annual credits, Rs. 10,000 monthly withdrawals, and Rs. 50,000 maximum balance."
+    },
+    {
+        "id": "C13",
+        "label": "STRICTER",
+        "internal_clause": "Third-party due diligence providers shall undergo an annual compliance review."
+    }
+
+
+    ]
+}

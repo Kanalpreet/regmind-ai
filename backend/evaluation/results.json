@@ -1,0 +1,119 @@
+{
+    "metrics": {
+        "total_cases": 13,
+        "true_positives": 1,
+        "false_positives": 5,
+        "true_negatives": 7,
+        "false_negatives": 0,
+        "accuracy": 0.6154,
+        "precision": 0.1667,
+        "recall": 1.0,
+        "f1_score": 0.2857
+    },
+    "predictions": [
+        {
+            "id": "C01",
+            "expected": "CONFLICT",
+            "predicted": "CONFLICT",
+            "result": "TP",
+            "risk_level": "Medium",
+            "reason": "The submitted policy explicitly contradicts RBI regulation vi) which states that the V-CIP infrastructure/application should be capable of preventing spoofing and the authorised official of the RE performing the V-CIP shall record audio-video as well as capture photograph of the customer present for identification."
+        },
+        {
+            "id": "C02",
+            "expected": "STRICTER",
+            "predicted": "CONFLICT",
+            "result": "FP",
+            "risk_level": "Medium",
+            "reason": "The submitted policy uses a 10% ownership threshold to determine beneficial ownership, which is inconsistent with RBI regulations that consider control through shareholding or management rights, including voting agreements, as a factor in determining beneficial ownership."
+        },
+        {
+            "id": "C03",
+            "expected": "STRICTER",
+            "predicted": "CONFLICT",
+            "result": "FP",
+            "risk_level": "Low",
+            "reason": "The submitted policy uses a 10% ownership threshold to determine beneficial ownership for partnership firms, which is inconsistent with RBI regulations that require more than 10% ownership to determine beneficial ownership."
+        },
+        {
+            "id": "C04",
+            "expected": "ALIGNED",
+            "predicted": "CONFLICT",
+            "result": "FP",
+            "risk_level": "Medium",
+            "reason": "The submitted policy uses a 15% ownership threshold to determine beneficial ownership, which is less stringent than the RBI regulation's requirement to identify beneficial owners with 10 percent or more interest in the trust."
+        },
+        {
+            "id": "C05",
+            "expected": "STRICTER",
+            "predicted": "CONFLICT",
+            "result": "FP",
+            "risk_level": "Medium",
+            "reason": "The submitted policy uses a 10% ownership threshold to determine beneficial ownership for unincorporated associations, which is inconsistent with RBI regulations that do not specify a threshold."
+        },
+        {
+            "id": "C06",
+            "expected": "STRICTER",
+            "predicted": "CONFLICT",
+            "result": "FP",
+            "risk_level": "High",
+            "reason": "The submitted policy states that high-risk customer accounts shall be reviewed every three months, which contradicts RBI regulation that requires periodic review of high-risk customer accounts at least once in every two years."
+        },
+        {
+            "id": "C07",
+            "expected": "ALIGNED",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy does not explicitly contradict any RBI regulation. However, it is less stringent than RBI regulations, which require periodic updation of KYC within one year of its falling due or up to June 30, 2026, whichever is later."
+        },
+        {
+            "id": "C08",
+            "expected": "ALIGNED",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy is consistent with RBI regulations. It retains customer records for five years after the business relationship ends, which aligns with RBI requirements."
+        },
+        {
+            "id": "C09",
+            "expected": "ALIGNED",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy does not explicitly contradict any RBI regulation. It is a summary of RBI requirements and does not weaken or bypass any mandatory RBI control."
+        },
+        {
+            "id": "C10",
+            "expected": "STRICTER",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy does not explicitly contradict any RBI regulation. It actually aligns with RBI regulation (g) which states that the customer shall be notified when the balance reaches rupees forty thousand."
+        },
+        {
+            "id": "C11",
+            "expected": "ALIGNED",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy is consistent with RBI regulations. It requires Suspicious Transaction Reports to be filed within seven working days, which is in line with the RBI's requirement to report suspicious transactions to FIU-IND in accordance with the PML Rules."
+        },
+        {
+            "id": "C12",
+            "expected": "ALIGNED",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy is consistent with RBI regulations. It adheres to the RBI limits of Rs. 1 lakh annual credits, Rs. 10,000 monthly withdrawals, and Rs. 50,000 maximum balance."
+        },
+        {
+            "id": "C13",
+            "expected": "STRICTER",
+            "predicted": "NO_CONFLICT",
+            "result": "TN",
+            "risk_level": "Low",
+            "reason": "The submitted policy does not explicitly contradict any RBI regulation. It only mentions an annual compliance review for third-party due diligence providers, which is a general requirement and does not weaken or bypass any RBI control."
+        }
+    ]
+}
