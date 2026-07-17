@@ -2,14 +2,13 @@ from backend.retrieval.vector_retriever import retrieve_chunks
 
 
 # =========================================
-# DUAL RETRIEVAL
+# RETRIEVE CONTEXT
 # =========================================
 
 def dual_retrieve(
-
     query,
-
-    top_k=5
+    top_k=5,
+    retrieve_internal=True
 ):
 
     # =====================================
@@ -17,33 +16,31 @@ def dual_retrieve(
     # =====================================
 
     rbi_chunks = retrieve_chunks(
-
         query,
-
         namespace="rbi",
-
         top_k=top_k
     )
 
+    internal_policy_chunks = []
+
     # =====================================
-    # INTERNAL POLICY RETRIEVAL
+    # INTERNAL POLICY RETRIEVAL (OPTIONAL)
     # =====================================
 
-    internal_policy_chunks = retrieve_chunks(
+    if retrieve_internal:
 
-        query,
-
-        namespace="internal_policy",
-
-        top_k=top_k
-    )
-
+        internal_policy_chunks = retrieve_chunks(
+            query,
+            namespace="internal_policy",
+            top_k=top_k
+        )
 
     print("\n========== RBI ==========")
     print(rbi_chunks)
 
-    print("\n========== INTERNAL ==========")
-    print(internal_policy_chunks)
+    if retrieve_internal:
+        print("\n========== INTERNAL ==========")
+        print(internal_policy_chunks)
 
     return {
 

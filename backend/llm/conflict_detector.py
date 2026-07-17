@@ -44,25 +44,21 @@ def detect_conflict(
 
         query,
 
-        top_k=top_k
+        top_k=top_k,
+        retrieve_internal=False
     )
 
     rbi_chunks = retrieval_results["rbi_chunks"]
 
-    internal_policy_chunks = retrieval_results["internal_policy_chunks"]
+   
 
     # =====================================
     # BUILD PROMPT
     # =====================================
-
     prompt = build_conflict_prompt(
-
-        query,
-
-        rbi_chunks,
-
-        internal_policy_chunks
-    )
+    query,
+    rbi_chunks
+)
 
     # =====================================
     # GROQ RESPONSE

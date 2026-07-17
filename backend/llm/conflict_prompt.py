@@ -3,12 +3,8 @@
 # =========================================
 
 def build_conflict_prompt(
-
     query,
-
-    rbi_chunks,
-
-    internal_policy_chunks
+    rbi_chunks
 ):
 
     # =====================================
@@ -16,22 +12,9 @@ def build_conflict_prompt(
     # =====================================
 
     rbi_context = "\n\n".join(
-
         [
             chunk["chunk_text"]
             for chunk in rbi_chunks
-        ]
-    )
-
-    # =====================================
-    # INTERNAL POLICY CONTEXT
-    # =====================================
-
-    internal_context = "\n\n".join(
-
-        [
-            chunk["chunk_text"]
-            for chunk in internal_policy_chunks
         ]
     )
 
@@ -40,55 +23,75 @@ def build_conflict_prompt(
     # =====================================
 
     prompt = f"""
-You are an AI Regulatory Compliance Conflict Detection Engine.
+You are RegMind AI, an expert Regulatory Compliance Conflict Detection Engine.
 
-A user has submitted an internal bank policy or operational scenario.
+A compliance officer has submitted an INTERNAL BANK POLICY or operational scenario for review.
 
-Your task is to compare the USER'S POLICY against the RBI regulations provided below.
+Your responsibility is to determine whether the submitted policy complies with the RBI regulations provided below.
 
-Determine whether the submitted policy:
-- contradicts RBI regulations,
-- omits mandatory RBI requirements,
-- weakens regulatory obligations,
-- or is fully compliant.
-
-========================
+=================================================
 USER SUBMITTED POLICY
-========================
+=================================================
 
 {query}
 
-========================
+=================================================
 RELEVANT RBI REGULATIONS
-========================
+=================================================
 
 {rbi_context}
 
-========================
+=================================================
 TASK
-========================
+=================================================
 
-Compare ONLY the user submitted policy with the RBI regulations.
+Compare ONLY the USER SUBMITTED POLICY with the RBI regulations.
 
-Do NOT compare the retrieved internal policy.
+DO NOT invent or assume any additional internal policies.
 
-If the user policy follows RBI requirements, return:
+DO NOT compare against any retrieved internal policy.
+
+A conflict exists ONLY if the submitted policy:
+
+• Contradicts an RBI requirement.
+• Omits a mandatory RBI obligation.
+• Weakens or bypasses a mandatory RBI control.
+• Allows something prohibited by RBI.
+
+There is NO conflict if the submitted policy:
+
+• Matches RBI requirements.
+• Is stricter than RBI requirements.
+• Adds additional internal controls that do not violate RBI regulations.
+
+If there is insufficient information to conclude a conflict, return:
 
 conflict_detected = false
 risk_level = "Low"
 
-Only report a conflict when there is a genuine contradiction or missing mandatory RBI requirement.
+=================================================
+OUTPUT
+=================================================
 
-Return STRICT JSON only.
+Return ONLY valid JSON.
 
 {{
     "conflict_detected": true,
     "risk_level": "Low | Medium | High",
-    "reason": "...",
-    "rbi_position": "...",
-    "internal_policy_position": "...",
-    "recommendation": "..."
+    "reason": "Brief explanation of why the policy conflicts or complies with RBI regulations.",
+    "rbi_position": "Relevant RBI requirement.",
+    "internal_policy_position": "Summarize ONLY the USER SUBMITTED POLICY.",
+    "recommendation": "Action required to achieve compliance."
 }}
+
+Rules:
+
+- Return ONLY JSON.
+- No markdown.
+- No explanations outside JSON.
+- Do not hallucinate regulations.
+- Do not fabricate internal policies.
+- The value of "internal_policy_position" MUST summarize ONLY the USER SUBMITTED POLICY.
 """
-    
+
     return prompt
