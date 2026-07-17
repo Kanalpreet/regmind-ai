@@ -40,61 +40,55 @@ def build_conflict_prompt(
     # =====================================
 
     prompt = f"""
-You are an AI compliance conflict detection engine.
+You are an AI Regulatory Compliance Conflict Detection Engine.
 
-Your task is to compare:
+A user has submitted an internal bank policy or operational scenario.
 
-1. RBI regulatory requirements
-2. Internal bank policy requirements
+Your task is to compare the USER'S POLICY against the RBI regulations provided below.
 
-and identify whether there is any compliance conflict,
-contradiction,
-misalignment,
-or operational risk.
+Determine whether the submitted policy:
+- contradicts RBI regulations,
+- omits mandatory RBI requirements,
+- weakens regulatory obligations,
+- or is fully compliant.
 
-USER QUERY:
+========================
+USER SUBMITTED POLICY
+========================
+
 {query}
 
-=====================================
-RBI REGULATION
-=====================================
+========================
+RELEVANT RBI REGULATIONS
+========================
 
 {rbi_context}
 
-=====================================
-INTERNAL POLICY
-=====================================
-
-{internal_context}
-
-=====================================
+========================
 TASK
-=====================================
+========================
 
-Analyze both carefully.
+Compare ONLY the user submitted policy with the RBI regulations.
 
-Return STRICTLY valid JSON.
+Do NOT compare the retrieved internal policy.
 
-FORMAT:
+If the user policy follows RBI requirements, return:
+
+conflict_detected = false
+risk_level = "Low"
+
+Only report a conflict when there is a genuine contradiction or missing mandatory RBI requirement.
+
+Return STRICT JSON only.
 
 {{
-    "conflict_detected": true or false,
-
+    "conflict_detected": true,
     "risk_level": "Low | Medium | High",
-
     "reason": "...",
-
     "rbi_position": "...",
-
     "internal_policy_position": "...",
-
     "recommendation": "..."
 }}
-
-IMPORTANT:
-- Return ONLY JSON
-- No markdown
-- No explanations outside JSON
 """
-
+    
     return prompt

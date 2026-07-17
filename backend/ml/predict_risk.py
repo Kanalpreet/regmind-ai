@@ -60,7 +60,7 @@ def predict_risk(text):
     # Predict confidence
     probabilities = model.predict_proba(X)[0]
 
-    confidence = round(max(probabilities) * 100, 2)
+    confidence = float(round(float(max(probabilities)) * 100, 2))
 
     # Decode label
     risk_label = encoder.inverse_transform([prediction])[0]
