@@ -5,7 +5,6 @@ from groq import Groq
 from dotenv import load_dotenv
 
 from backend.config import GROQ_MODEL
-
 from backend.ml.predict_risk import predict_risk
 
 
@@ -34,7 +33,6 @@ def generate_response(query, retrieved_chunks):
     # =====================================
 
     context = "\n\n".join(
-
         [
             chunk["chunk_text"]
             for chunk in retrieved_chunks
@@ -46,7 +44,6 @@ def generate_response(query, retrieved_chunks):
     # =====================================
 
     combined_text = " ".join(
-
         [
             chunk["chunk_text"]
             for chunk in retrieved_chunks
@@ -66,24 +63,16 @@ def generate_response(query, retrieved_chunks):
     # =====================================
 
     source_pages = list(
-
-    set(
-
-        [
-
-            chunk.get(
-                "metadata",
-                {}
-            ).get(
-                "page_number",
-
-                chunk.get("page_number")
-            )
-
-            for chunk in retrieved_chunks
-        ]
+        set(
+            [
+                chunk.get("metadata", {}).get(
+                    "page_number",
+                    chunk.get("page_number")
+                )
+                for chunk in retrieved_chunks
+            ]
+        )
     )
-)
 
     # =====================================
     # PROMPT
@@ -159,6 +148,46 @@ Return STRICTLY valid JSON:
         }
 
     # =====================================
+    # SOURCE EVIDENCE
+    # =====================================
+
+    source_evidence = []
+
+    seen = set()
+
+    for chunk in retrieved_chunks:
+
+        metadata = chunk.get("metadata", {})
+
+        doc = metadata.get("document_name", "Unknown Document")
+
+        # Make filename prettier
+        doc = (
+            doc.replace(".pdf", "")
+               .replace("_", " ")
+               .title()
+        )
+
+        page = metadata.get("page_number", "-")
+
+        source = metadata.get("namespace", "Unknown")
+
+        key = (doc, page, source)
+
+        if key not in seen:
+
+            seen.add(key)
+
+            source_evidence.append({
+
+                "document": doc,
+
+                "page": page,
+
+                "source": source
+            })
+
+    # =====================================
     # FINAL RESPONSE
     # =====================================
 
@@ -180,7 +209,10 @@ Return STRICTLY valid JSON:
         "risk_analysis": risk_result,
 
         # SOURCE TRACEABILITY
-        "source_pages": source_pages
+        "source_pages": source_pages,
+
+        # NEW
+        "source_evidence": source_evidence
     }
 
     return final_response
