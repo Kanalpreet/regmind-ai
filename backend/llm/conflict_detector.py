@@ -84,6 +84,10 @@ def detect_conflict(
 
     llm_response = response.choices[0].message.content
 
+    print("\n========== RAW GROQ RESPONSE ==========\n")
+    print(llm_response)
+    print("\n=======================================\n")
+
     # =====================================
     # PARSE JSON
     # =====================================

@@ -54,20 +54,40 @@ def predict_risk(text):
     # Convert into DataFrame
     X = pd.DataFrame([features])
 
-    # Predict encoded label
+    # Predict risk class
     prediction = model.predict(X)[0]
 
-    # Decode label
-    risk_label = str(
+    # Predict confidence
+    probabilities = model.predict_proba(X)[0]
 
-    encoder.inverse_transform(
-        [prediction]
-    )[0]
-)
+    confidence = round(max(probabilities) * 100, 2)
+
+    # Decode label
+    risk_label = encoder.inverse_transform([prediction])[0]
+
+    # Human-readable risk factors
+    risk_factors = []
+
+    if features.get("has_shall"):
+        risk_factors.append("Mandatory compliance clause detected")
+
+    if features.get("has_must"):
+        risk_factors.append("Mandatory obligation detected")
+
+    if features.get("has_deadline"):
+        risk_factors.append("Compliance deadline mentioned")
+
+    if features.get("has_penalty"):
+        risk_factors.append("Penalty provision detected")
+
+    if features.get("has_violation"):
+        risk_factors.append("Violation clause detected")
+
+    if features.get("has_customer_data"):
+        risk_factors.append("Customer data involved")
 
     return {
-
         "risk_level": risk_label,
-
-        "features": features
+        "confidence": confidence,
+        "risk_factors": risk_factors
     }
