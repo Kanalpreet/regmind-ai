@@ -1,19 +1,23 @@
 import os
-import pandas as pd
 import joblib
+import pandas as pd
 
 from xgboost import XGBClassifier
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import (
+    classification_report,
+    accuracy_score,
+    confusion_matrix
+)
 
 from risk_features import extract_risk_features
 from training_data import training_examples
 
 
 # =========================================
-# PROJECT ROOT PATH
+# PROJECT ROOT
 # =========================================
 
 BASE_DIR = os.path.dirname(
@@ -31,7 +35,6 @@ MODELS_DIR = os.path.join(
     "models"
 )
 
-# Create models folder if not exists
 os.makedirs(MODELS_DIR, exist_ok=True)
 
 # =========================================
@@ -43,7 +46,6 @@ labels = []
 
 for example in training_examples:
 
-    # Extract ML features
     features = extract_risk_features(
         example["text"]
     )
@@ -75,9 +77,12 @@ X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
 
-    test_size=0.2,
+    test_size=0.20,
 
-    random_state=42
+    random_state=42,
+
+    stratify=y
+
 )
 
 # =========================================
@@ -86,64 +91,142 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 model = XGBClassifier(
 
-    n_estimators=50,
+    n_estimators=150,
 
-    max_depth=3,
+    max_depth=4,
 
     learning_rate=0.1,
 
-    objective="multi:softmax",
+    objective="multi:softprob",
 
-    eval_metric="mlogloss"
+    eval_metric="mlogloss",
+
+    random_state=42
+
 )
 
-# Train model
-model.fit(X_train, y_train)
+# =========================================
+# TRAIN MODEL
+# =========================================
+
+model.fit(
+
+    X_train,
+    y_train
+
+)
+
+# =========================================
+# PREDICTIONS
+# =========================================
+
+predictions = model.predict(X_test)
+
+accuracy = accuracy_score(
+    y_test,
+    predictions
+)
 
 # =========================================
 # EVALUATION
 # =========================================
 
-predictions = model.predict(X_test)
+print("\n" + "=" * 60)
+print("MODEL EVALUATION")
+print("=" * 60)
 
-print("\n🚀 CLASSIFICATION REPORT:\n")
+print(f"\nAccuracy : {accuracy:.2%}\n")
+
+print(classification_report(
+
+    y_test,
+
+    predictions,
+
+    target_names=encoder.classes_,
+
+    zero_division=0
+
+))
+
+print("Confusion Matrix\n")
 
 print(
-    classification_report(
+
+    confusion_matrix(
         y_test,
-        predictions,
-        zero_division=0
+        predictions
     )
+
 )
+
+# =========================================
+# FEATURE IMPORTANCE
+# =========================================
+
+importance_df = pd.DataFrame({
+
+    "Feature": X.columns,
+
+    "Importance": model.feature_importances_
+
+})
+
+importance_df = importance_df.sort_values(
+
+    by="Importance",
+
+    ascending=False
+
+)
+
+print("\n" + "=" * 60)
+print("FEATURE IMPORTANCE")
+print("=" * 60)
+
+print(importance_df)
 
 # =========================================
 # SAVE MODEL
 # =========================================
 
 MODEL_PATH = os.path.join(
+
     MODELS_DIR,
+
     "xgboost_risk.pkl"
+
 )
 
 ENCODER_PATH = os.path.join(
+
     MODELS_DIR,
+
     "label_encoder.pkl"
+
 )
 
-# Save trained model
 joblib.dump(
+
     model,
+
     MODEL_PATH
+
 )
 
-# Save label encoder
 joblib.dump(
+
     encoder,
+
     ENCODER_PATH
+
 )
 
-print("\n✅ Risk Model Saved Successfully")
+print("\n" + "=" * 60)
+print("MODEL SAVED")
+print("=" * 60)
 
-print(f"\n📁 Model Path: {MODEL_PATH}")
+print(f"\nModel   : {MODEL_PATH}")
+print(f"Encoder : {ENCODER_PATH}")
 
-print(f"📁 Encoder Path: {ENCODER_PATH}")
+print("\nTraining Completed Successfully ✅")

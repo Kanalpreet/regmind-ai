@@ -256,51 +256,101 @@ const AskAI = () => {
 
       </div>
 
-      {/* RISK ANALYSIS */}
+     
+      {/* AI COMPLIANCE RISK */}
 
-      <div className="meta-card">
+  <div className="meta-card">
 
-        <h3>
-          Risk Analysis
-        </h3>
+  <h3>AI Compliance Risk Assessment</h3>
 
-        <div className="risk-features">
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "15px"
+    }}
+  >
 
-          {result?.risk_analysis?.features &&
-            Object.entries(
-              result.risk_analysis.features
-            ).map(([key, value]) => (
+    {/* Risk Badge */}
 
-            <div
-              className="risk-row"
-              key={key}
-            >
+    <div
+      className={`risk-pill ${getRiskClass(
+        result?.risk_analysis?.risk_level
+      )}`}
+      style={{
+        width: "fit-content"
+      }}
+    >
+      {result?.risk_analysis?.risk_level} Risk
+    </div>
 
-              <span>
-                {key.replaceAll("_", " ")}
-              </span>
+    {/* Confidence */}
 
-              <strong>
-                {value.toString()}
-              </strong>
+    <div>
 
-            </div>
+      <strong>Confidence</strong>
 
-          ))}
+      <p
+        style={{
+          marginTop: "6px",
+          fontSize: "18px",
+          fontWeight: "600"
+        }}
+      >
+        {result?.risk_analysis?.confidence ?? 0}%
+      </p>
 
-        </div>
+    </div>
+
+    {/* Risk Drivers */}
+
+    <div>
+
+      <strong>Top Risk Drivers</strong>
+
+      <div
+        style={{
+          marginTop: "10px"
+        }}
+      >
+
+        {result?.risk_analysis?.risk_factors?.length ? (
+
+          result.risk_analysis.risk_factors.map(
+            (factor, index) => (
+
+              <div
+                key={index}
+                className="risk-row"
+              >
+                ✓ {factor}
+              </div>
+
+            )
+          )
+
+        ) : (
+
+          <p>No significant risk indicators detected.</p>
+
+        )}
 
       </div>
 
     </div>
+
+  </div>
+
+</div>
+    </div> {/* End meta-grid */}
 
   </section>
 
 )}
 
     </div>
+
   );
 };
 
 export default AskAI;
-
