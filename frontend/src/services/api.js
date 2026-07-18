@@ -1,6 +1,6 @@
 const BASE_URL = "http://127.0.0.1:8000";
 
-export const askAI = async (query) => {
+export const askAI = async (sessionId, query) => {
 
     const response = await fetch(`${BASE_URL}/ask-ai`, {
 
@@ -11,7 +11,8 @@ export const askAI = async (query) => {
         },
 
         body: JSON.stringify({
-            query,
+            session_id: sessionId,
+            query: query,
         }),
     });
 

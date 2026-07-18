@@ -9,6 +9,7 @@ const AskAI = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [sessionId] = useState(() => crypto.randomUUID());
 
   const handleAskAI = async () => {
 
@@ -22,7 +23,7 @@ const AskAI = () => {
       setLoading(true);
       setError("");
 
-      const response = await askAI(query);
+      const response = await askAI(query,sessionId);
 
       setResult(response);
 
