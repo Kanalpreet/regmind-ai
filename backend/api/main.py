@@ -46,7 +46,7 @@ app.add_middleware(
 # =========================================
 
 class QueryRequest(BaseModel):
-
+    session_id: str
     query: str
 
 

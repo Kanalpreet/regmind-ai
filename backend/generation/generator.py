@@ -26,7 +26,7 @@ client = Groq(
 # GENERATE RESPONSE
 # =========================================
 
-def generate_response(query, retrieved_chunks):
+def generate_response(query, retrieved_chunks, conversation_history):
 
     # =====================================
     # BUILD CONTEXT
