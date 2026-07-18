@@ -4,8 +4,8 @@
 # CHUNKING CONFIG
 # =========================
 
-CHUNK_SIZE = 300
-CHUNK_OVERLAP = 50
+CHUNK_SIZE = 900
+CHUNK_OVERLAP = 150
 # Pinecone
 
 PINECONE_INDEX = "regmind-ai"
