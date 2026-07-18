@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from backend.config import GROQ_MODEL
 from backend.ml.predict_risk import predict_risk
 
-
 # =========================================
 # LOAD ENV
 # =========================================
@@ -26,7 +25,11 @@ client = Groq(
 # GENERATE RESPONSE
 # =========================================
 
-def generate_response(query, retrieved_chunks, conversation_history):
+def generate_response(
+    query,
+    retrieved_chunks,
+    conversation_history
+):
 
     # =====================================
     # BUILD CONTEXT
@@ -40,7 +43,7 @@ def generate_response(query, retrieved_chunks, conversation_history):
     )
 
     # =====================================
-    # COMBINE TEXT FOR RISK ANALYSIS
+    # COMBINE TEXT FOR ML
     # =====================================
 
     combined_text = " ".join(
@@ -75,34 +78,73 @@ def generate_response(query, retrieved_chunks, conversation_history):
     )
 
     # =====================================
+    # CONVERSATION HISTORY
+    # =====================================
+
+    history = ""
+
+    for message in conversation_history:
+
+        history += (
+            f"{message['role'].capitalize()}: "
+            f"{message['content']}\n"
+        )
+
+    # =====================================
     # PROMPT
     # =====================================
 
     prompt = f"""
-You are an RBI compliance AI assistant.
+You are RegMind AI, an expert RBI Compliance AI Assistant.
 
-Answer ONLY using the provided context.
+Answer ONLY using the retrieved RBI regulations.
 
-Risk analysis from ML engine:
+You may use the previous conversation ONLY for understanding context.
+
+Do NOT invent RBI regulations.
+
+If the answer is not available in the retrieved context, clearly say so.
+
+=================================================
+CONVERSATION HISTORY
+=================================================
+
+{history}
+
+=================================================
+ML RISK ANALYSIS
+=================================================
+
+Predicted Risk Level:
 {risk_result['risk_level']}
 
-CONTEXT:
+=================================================
+RETRIEVED RBI CONTEXT
+=================================================
+
 {context}
 
-QUESTION:
+=================================================
+CURRENT USER QUESTION
+=================================================
+
 {query}
 
-Return STRICTLY valid JSON:
+=================================================
+OUTPUT
+=================================================
+
+Return STRICTLY valid JSON.
 
 {{
-  "answer": "...",
+    "answer": "...",
 
-  "compliance_points": [
-    "...",
-    "..."
-  ],
+    "compliance_points": [
+        "...",
+        "..."
+    ],
 
-  "summary": "..."
+    "summary": "..."
 }}
 """
 
@@ -125,7 +167,7 @@ Return STRICTLY valid JSON:
     )
 
     # =====================================
-    # PARSE LLM JSON
+    # PARSE JSON
     # =====================================
 
     llm_response = response.choices[0].message.content
@@ -159,20 +201,33 @@ Return STRICTLY valid JSON:
 
         metadata = chunk.get("metadata", {})
 
-        doc = metadata.get("document_name", "Unknown Document")
-
-        # Make filename prettier
-        doc = (
-            doc.replace(".pdf", "")
-               .replace("_", " ")
-               .title()
+        document = metadata.get(
+            "document_name",
+            "Unknown Document"
         )
 
-        page = metadata.get("page_number", "-")
+        document = (
+            document
+            .replace(".pdf", "")
+            .replace("_", " ")
+            .title()
+        )
 
-        source = metadata.get("namespace", "Unknown")
+        page = metadata.get(
+            "page_number",
+            "-"
+        )
 
-        key = (doc, page, source)
+        source = metadata.get(
+            "namespace",
+            "Unknown"
+        )
+
+        key = (
+            document,
+            page,
+            source
+        )
 
         if key not in seen:
 
@@ -180,7 +235,7 @@ Return STRICTLY valid JSON:
 
             source_evidence.append({
 
-                "document": doc,
+                "document": document,
 
                 "page": page,
 
@@ -191,7 +246,7 @@ Return STRICTLY valid JSON:
     # FINAL RESPONSE
     # =====================================
 
-    final_response = {
+    return {
 
         "answer": parsed_response.get(
             "answer"
@@ -205,14 +260,9 @@ Return STRICTLY valid JSON:
             "summary"
         ),
 
-        # ML OUTPUT
         "risk_analysis": risk_result,
 
-        # SOURCE TRACEABILITY
         "source_pages": source_pages,
 
-        # NEW
         "source_evidence": source_evidence
     }
-
-    return final_response
