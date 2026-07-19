@@ -64,7 +64,6 @@ const MainLayout = ({ children }) => {
               <span className="signal-rings"><i /></span>
               <span>{page.signal}</span>
             </div>
-            <div className="framework-chip"><span>RBI</span><span>INDIA</span></div>
           </div>
         </div>
         <div className="workspace-divider" aria-hidden="true"><span /></div>

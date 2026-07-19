@@ -49,7 +49,7 @@ const ConflictDetection = () => {
         <h1>Policy Conflict Detection</h1>
 
         <p>
-          Cross-reference internal policies against RBI regulations using
+          Cross-reference internal policies against regulatory guidance using
           comparative AI reasoning.
         </p>
       </section>
@@ -90,7 +90,7 @@ const ConflictDetection = () => {
           <div className="loader"></div>
 
           <p>
-            Comparing internal policies with RBI compliance frameworks...
+            Comparing internal policies with regulatory frameworks...
           </p>
         </div>
       )}
@@ -160,11 +160,11 @@ const ConflictDetection = () => {
 
                 <div className="vs-divider">VS</div>
 
-                {/* RBI */}
+                {/* Reference framework */}
 
                 <div>
                   <div className="section-label">
-                    RBI Regulation
+                    Reference Framework
                   </div>
 
                   <div className="content-box regulation">

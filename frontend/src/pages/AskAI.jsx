@@ -66,7 +66,7 @@ const AskAI = () => {
         </h1>
 
         <p>
-          Analyze RBI regulations, internal SOPs,
+          Analyze regulatory guidance, internal SOPs,
           and compliance frameworks using hybrid AI retrieval.
         </p>
 
@@ -241,7 +241,7 @@ const AskAI = () => {
             <p className="source-name">
 
               {item.source === "rbi"
-                ? "🏛 RBI Regulation"
+                ? "🏛 Regulatory Guidance"
                 : "🏦 Internal Policy"}
 
             </p>

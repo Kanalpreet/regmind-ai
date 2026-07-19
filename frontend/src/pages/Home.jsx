@@ -24,7 +24,7 @@ const Home = () => {
          
 
           <p>
-           RegMind AI is an AI-powered compliance intelligence platform that uses Hybrid RAG, comparative AI reasoning, and risk analysis to evaluate RBI regulations against internal compliance policies, detect regulatory conflicts, identify compliance gaps, and provide actionable insights before they become business risks.
+           RegMind AI is an AI-powered compliance intelligence platform that uses Hybrid RAG, comparative AI reasoning, and risk analysis to evaluate regulatory guidance against internal compliance policies, detect conflicts, identify compliance gaps, and provide actionable insights before they become business risks.
           </p>
 
           <div className="hero-actions">
@@ -62,7 +62,7 @@ const Home = () => {
         Sources Retrieved
       </div>
       <div className="preview-content">
-        RBI Master Direction on KYC
+        Regulatory Guidance on Customer Verification
         <br />
         Internal Customer Onboarding SOP
       </div>
@@ -92,7 +92,7 @@ const Home = () => {
         References
       </div>
       <div className="preview-content">
-        RBI KYC Direction – Page 14
+        Customer Verification Guidance – Page 14
         <br />
         Internal SOP – Section 3.2
       </div>
@@ -117,7 +117,7 @@ const Home = () => {
           <div className="feature-card">
             <div className="feature-icon"></div>
             <h3>Dual Collection Analysis</h3>
-            <p>Compare RBI regulations with internal SOPs simultaneously using AI reasoning.</p>
+            <p>Compare regulatory guidance with internal SOPs simultaneously using AI reasoning.</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon"></div>
@@ -142,7 +142,7 @@ const Home = () => {
           <div className="workflow-card">
             <div className="step">01</div>
             <h3>Upload Documents</h3>
-            <p>Upload RBI circulars and internal compliance SOPs.</p>
+            <p>Upload regulatory documents and internal compliance SOPs.</p>
           </div>
           <div className="workflow-card">
             <div className="step">02</div>
